@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Boutique Marocaine</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo-nav">
+      <a href="index.html"><img src="images/fca-icon.png" alt="FCA Shop" class="logo" />
+      <nav>
+        <ul>
+          <li><a href="index.html">Boutique</a></li>
+          <li><a href="about.html">À propos</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="actions">
+        <button id="themeToggle" hidden>🌙</button>
+        <button id="cart-toggle" hidden>🛒 (<span id="cart-count">0</span>)</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <h1>Contactez-nous</h1>
+    <form>
+      <label for="name">Nom:</label>
+      <input type="text" id="name" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" required>
+      <label for="message">Message:</label>
+      <textarea id="message" required></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

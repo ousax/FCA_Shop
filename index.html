@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <title>FCA Shop FEG</title>
+  <link rel="icon" alt="FCA Shop Logo" type="image/png" href="images/fca-icon.png" width="150" height="auto" >
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Achetez des produits incroyables à des prix équitables.">
+  <meta property="og:title" content="FCA Shop">
+  <meta property="og:description" content="Achetez des produits incroyables à des prix équitables.">
+  <meta property="og:url" content="https://ousax.github.io">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="logo-nav">
+      <a href="index.html"><img src="images/fca-icon.png" alt="FCA Shop" class="logo"/>
+      <nav>
+        <ul>
+          <li><a href="index.html">Boutique</a></li>
+          <li><a href="account.html">Mon Compte</a></li>
+          <li><a href="about.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <div class="search-bar"><input type="text" id="searchInput" placeholder="Rechercher des produits..."></div>
+          <div class="sort-options">
+          <select id="sortSelect">
+            <option value="name-asc">Trier par: Nom (A-Z)</option>
+            <option value="name-desc">Trier par: Nom (Z-A)</option>
+            <option value="price-asc">Trier par: Prix (Croissant)</option>
+            <option value="price-desc">Trier par: Prix (Décroissant)</option>
+            <option value="rating-asc">Trier par: Note (Croissante)</option>
+            <option value="rating-desc">Trier par: Note (Décroissante)</option>
+          </select>
+          </div>
+        </ul>
+      </nav>
+      <div class="actions">
+        <button id="themeToggle">🌙</button>
+        <button id="cart-toggle">🛒 (<span id="cart-count">0</span>)</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="productsGrid" class="grid-container"></section>
+    <div hidden>ddd</div>
+  </main>
+
+  <div id="notification" class="notification hidden"></div>
+
+  <div id="productModal" class="modal hidden">
+    <div id="modalContent" class="modal-content"></div>
+  </div>
+  <div id="cartModal" class="cart-modal hidden">
+    <div class="cart-content">
+      <span id="closeCart" class="close-button">&times;</span>
+      <h2>Panier</h2>
+      <ul id="cartItems"></ul>
+      <p>Total: <span id="cartTotal">0 DH</span></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
