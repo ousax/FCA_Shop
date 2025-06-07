@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>À propos - Boutique Marocaine</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="images/fca-icon.png" type="image/png">
 </head>
 <body>
   <header>
@@ -13,22 +14,38 @@
       <nav>
         <ul>
           <li><a href="index.html">Boutique</a></li>
+          <li><a href="account.html">Mon Compte</a></li>
           <li><a href="about.html" class="active">À propos</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
-      <div class="actions" >
-        <button id="themeToggle" hidden>🌙</button>
-        <button id="cart-toggle" hidden>🛒 (<span id="cart-count">0</span>)</button>
+      <div class="actions">
+        <button id="themeToggle">🌙</button>
+        <button id="cart-toggle">🛒 (<span id="cart-count">0</span>)</button>
       </div>
     </div>
   </header>
 
   <main class="page-content">
-    <h1>À propos de nous</h1>
-    <p>Nous sommes une boutique spécialisée dans les produits artisanaux marocains...</p>
+    <div class="about-content">
+      <h1>À propos de nous</h1>
+      <h2>Notre Histoire</h2>
+      <p>Fondée en 2020, FCA Shop est née de la passion pour les produits artisanaux marocains de qualité. Notre mission est de mettre en valeur le savoir-faire traditionnel marocain tout en offrant une expérience d'achat moderne et pratique.</p>
+      
+      <h2>Nos Valeurs</h2>
+      <p>Nous croyons en :</p>
+      <ul>
+        <li>La qualité artisanale</li>
+        <li>Le commerce équitable</li>
+        <li>Le respect de l'environnement</li>
+        <li>L'authenticité des produits</li>
+      </ul>
+      
+      <h2>Notre Équipe</h2>
+      <p>Notre équipe est composée de passionnés qui sélectionnent avec soin chaque produit proposé dans notre boutique. Nous travaillons directement avec les artisans locaux pour vous offrir des produits uniques et authentiques.</p>
+    </div>
   </main>
 
-  <script src="common.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
