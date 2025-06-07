@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact - Boutique Marocaine</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="images/fca-icon.png" type="image/png">
 </head>
 <body>
   <header>
@@ -13,28 +14,42 @@
       <nav>
         <ul>
           <li><a href="index.html">Boutique</a></li>
+          <li><a href="account.html">Mon Compte</a></li>
           <li><a href="about.html">À propos</a></li>
           <li><a href="contact.html" class="active">Contact</a></li>
         </ul>
       </nav>
       <div class="actions">
-        <button id="themeToggle" hidden>🌙</button>
-        <button id="cart-toggle" hidden>🛒 (<span id="cart-count">0</span>)</button>
+        <button id="themeToggle">🌙</button>
+        <button id="cart-toggle">🛒 (<span id="cart-count">0</span>)</button>
       </div>
     </div>
   </header>
 
   <main class="page-content">
     <h1>Contactez-nous</h1>
-    <form>
-      <label for="name">Nom:</label>
-      <input type="text" id="name" required>
+    <form id="contactForm">
+      <label for="name">Nom complet:</label>
+      <input type="text" id="name" name="name" required>
+      
       <label for="email">Email:</label>
-      <input type="email" id="email" required>
+      <input type="email" id="email" name="email" required>
+      
+      <label for="subject">Sujet:</label>
+      <input type="text" id="subject" name="subject" required>
+      
       <label for="message">Message:</label>
-      <textarea id="message" required></textarea>
+      <textarea id="message" name="message" required></textarea>
+      
       <button type="submit">Envoyer</button>
     </form>
+    
+    <div class="contact-info" style="text-align: center; margin-top: 2rem;">
+      <h2>Autres moyens de contact</h2>
+      <p><strong>Email:</strong> contact@fcashop.com</p>
+      <p><strong>Téléphone:</strong> +212 5 22 34 56 78</p>
+      <p><strong>Adresse:</strong> 123 Avenue Hassan II, Casablanca, Maroc</p>
+    </div>
   </main>
 
   <script src="script.js"></script>
