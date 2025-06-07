@@ -1,4 +1,3 @@
-// chatbot.js
 document.addEventListener("DOMContentLoaded", () => {
   const chatbotToggle = document.getElementById("chatbotToggle");
   const chatbotContainer = document.querySelector(".chatbot-container");
@@ -48,13 +47,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Ajouter un message au chat
-  function addMessage(text, sender) {
-    const messageDiv = document.createElement("div");
-    messageDiv.classList.add("message", `${sender}-message`);
-    messageDiv.innerHTML = text;
-    chatbotMessages.appendChild(messageDiv);
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-  }
+  function sanitizeInput(input) {
+  const div = document.createElement('div');
+  div.textContent = input; 
+  return div.innerHTML;
+}
+
+function addMessage(text, sender) {
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add("message", `${sender}-message`);
+  
+  // Sanitize le texte avant l'affichage
+  messageDiv.textContent = text;
+  
+  chatbotMessages.appendChild(messageDiv);
+  chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+}
 
   // Générer une réponse
   function generateReply(message) {
