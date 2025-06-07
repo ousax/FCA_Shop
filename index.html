@@ -9,6 +9,7 @@
   <meta property="og:title" content="FCA Shop">
   <meta property="og:description" content="Achetez des produits incroyables à des prix équitables.">
   <meta property="og:url" content="https://ousax.github.io">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="style.css" rel="stylesheet">
 </head>
 <body>
@@ -16,24 +17,33 @@
     <div class="logo-nav">
       <a href="index.html"><img src="images/fca-icon.png" alt="FCA Shop" class="logo"/>
       <nav>
-        <ul>
-          <li><a href="index.html">Boutique</a></li>
-          <li><a href="account.html">Mon Compte</a></li>
-          <li><a href="about.html">À propos</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <div class="search-bar"><input type="text" id="searchInput" placeholder="Rechercher des produits..."></div>
-          <div class="sort-options">
-          <select id="sortSelect">
-            <option value="name-asc">Trier par: Nom (A-Z)</option>
-            <option value="name-desc">Trier par: Nom (Z-A)</option>
-            <option value="price-asc">Trier par: Prix (Croissant)</option>
-            <option value="price-desc">Trier par: Prix (Décroissant)</option>
-            <option value="rating-asc">Trier par: Note (Croissante)</option>
-            <option value="rating-desc">Trier par: Note (Décroissante)</option>
-          </select>
+      <ul class="main-nav">
+        <!-- Liens principaux avec icônes -->
+        <li><a href="index.html" class="active"><i class="fas fa-store"></i> <span>Boutique</span></a></li>
+        <li><a href="account.html"><i class="fas fa-user"></i> <span>Mon Compte</span></a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> <span>À propos</span></a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
+        
+        <!-- Conteneur pour search et sort -->
+        <li class="nav-utils">
+          <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Rechercher...">
           </div>
-        </ul>
-      </nav>
+          <div class="sort-options">
+            <i class="fas fa-sort"></i>
+            <select id="sortSelect">
+              <option value="name-asc">Trier par: Nom (A-Z)</option>
+              <option value="name-desc">Trier par: Nom (Z-A)</option>
+              <option value="price-asc">Trier par: Prix (Croissant)</option>
+              <option value="price-desc">Trier par: Prix (Décroissant)</option>
+              <option value="rating-asc">Trier par: Note (Croissante)</option>
+              <option value="rating-desc">Trier par: Note (Décroissante)</option>>
+            </select>
+          </div>
+        </li>
+      </ul>
+    </nav>
       <div class="actions">
         <button id="themeToggle">🌙</button>
         <button id="cart-toggle">🛒 (<span id="cart-count">0</span>)</button>

@@ -1,3 +1,4 @@
+// script.js
 const rawProducts = [
   ["Chaussures Antigravité", "images/Kangoo.avif", "DH", "Des chaussures révolutionnaires qui réduisent l'impact sur les articulations. Parfaites pour le fitness et la rééducation."],
   ["Miel ZCH", "images/miel.jpg", "DH", "Miel 100% naturel produit dans les montagnes de l'Atlas. Riche en antioxydants et enzymes bénéfiques."],
@@ -22,8 +23,8 @@ function getRandomPrice(min = 20, max = 100) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function getRandomRating() {
-  return (Math.random() * 5).toFixed(1);
-}
+      return (Math.random() * 1 + 4).toFixed(1); // par contre le 1er cas on va prendre un seul chiffre apres la , 7it note (3,4 ) 
+  }
 function getVotersRandom() {
   return Math.floor(Math.random() * 100) + 1;
 }

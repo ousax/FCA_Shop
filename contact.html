@@ -6,6 +6,9 @@
   <title>Contact - Boutique Marocaine</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="images/fca-icon.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="chatbot.js" defer></script>
+  <script src="contact.js" defer></script>
 </head>
 <body>
   <header>
@@ -13,10 +16,10 @@
       <a href="index.html"><img src="images/fca-icon.png" alt="FCA Shop" class="logo" />
       <nav>
         <ul>
-          <li><a href="index.html">Boutique</a></li>
-          <li><a href="account.html">Mon Compte</a></li>
-          <li><a href="about.html">À propos</a></li>
-          <li><a href="contact.html" class="active">Contact</a></li>
+          <li><a href="index.html"><i class="fas fa-store"></i> Boutique</a></li>
+          <li><a href="account.html"><i class="fas fa-user"></i> Mon Compte</a></li>
+          <li><a href="about.html"><i class="fas fa-info-circle"></i> À propos</a></li>
+          <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
         </ul>
       </nav>
       <div class="actions">
@@ -53,5 +56,20 @@
   </main>
 
   <script src="script.js"></script>
+  <!-- Ajoutez cette section avant le </body> -->
+  <div class="chatbot-container">
+    <div class="chatbot-header">
+      <h3>Assistant Virtuel</h3>
+      <button id="closeChatbot">&times;</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages"></div>
+    <div class="chatbot-input">
+      <input type="text" id="userMessage" placeholder="Posez votre question...">
+      <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+  <button class="chatbot-toggle" id="chatbotToggle">
+    <i class="fas fa-robot"></i>
+  </button>
 </body>
 </html>
