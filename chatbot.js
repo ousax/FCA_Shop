@@ -1,3 +1,4 @@
+// chatbot.js
 document.addEventListener("DOMContentLoaded", () => {
   const chatbotToggle = document.getElementById("chatbotToggle");
   const chatbotContainer = document.querySelector(".chatbot-container");

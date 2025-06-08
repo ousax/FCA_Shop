@@ -26,7 +26,7 @@ function getRandomRating() {
       return (Math.random() * 1 + 4).toFixed(1); // par contre le 1er cas on va prendre un seul chiffre apres la , 7it note (3,4 ) 
   }
 function getVotersRandom() {
-  return Math.floor(Math.random() * 100) + 1;
+  return Math.floor(Math.random() * 100) + 1; //katn9ss ra9m mn virgule 7.4 ==> 7
 }
 
 const products = rawProducts.map(product => ({
@@ -132,7 +132,6 @@ function openProductModal(product) {
     e.stopPropagation();  
     productModal.classList.add("hidden");
   };
-
   modalContent.querySelector(".add-cart-btn").addEventListener("click", () => {
     cart.push(product);
     updateCartDisplay();
@@ -165,6 +164,7 @@ function createProductCard(product) {
     div.style.boxShadow = "none";
     div.style.transform = "scale(1)";
   });
+  
   return div;
 };
 document.addEventListener("DOMContentLoaded", () => {

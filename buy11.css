@@ -776,7 +776,7 @@ header {
   border-color: #444;
 }
 /*IF YOU UNCOMMET THIS CODE IATKHSSER LOOK DIAL HME PAGE WHTA DIAL DES ELEMENTS*/
-/*#submitbuy{
+#submitbuy{
   background-color: rgb(4, 100, 68);
   color: white;
   width: 100%;
@@ -826,7 +826,7 @@ button:hover {
   }
 .payment-icon.selected {
     color: #0070ba; /* example selected color */
-  /*  transform: scale(1.2);
+    transform: scale(1.2);
   }
 .payment-icon {
   margin: 16px;
@@ -837,4 +837,3 @@ button:hover {
 .payment-icon[id="cardBtn"]:hover{
   color: #ff9800;
 }
-*/

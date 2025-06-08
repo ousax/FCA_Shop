@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="images/fca-icon.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
   <script src="chatbot.js" defer></script>
   <script src="contact.js" defer></script>
 </head>
@@ -16,22 +17,24 @@
       <a href="index.html"><img src="images/fca-icon.png" alt="FCA Shop" class="logo" />
       <nav>
         <ul>
-          <li><a href="index.html"><i class="fas fa-store"></i> Boutique</a></li>
-          <li><a href="account.html"><i class="fas fa-user"></i> Mon Compte</a></li>
-          <li><a href="about.html"><i class="fas fa-info-circle"></i> À propos</a></li>
-          <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
+          <li><a href="index.html"><i class="fas fa-store"></i> <span>Boutique</span></a></li>
+          <li><a href="account.html"><i class="fas fa-user"></i> <span>Mon Compte</span></a></li>
+          <li><a href="about.html"><i class="fas fa-info-circle"></i> <span>À propos</span></a></li>
+          <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
         </ul>
       </nav>
       <div class="actions">
-        <button id="themeToggle">🌙</button>
-        <button id="cart-toggle">🛒 (<span id="cart-count">0</span>)</button>
+        <button id="themeToggle" hidden>🌙</button>
+        <button id="cart-toggle" hidden>🛒 (<span id="cart-count">0</span>)</button>
       </div>
     </div>
   </header>
 
   <main class="page-content">
-    <h1>Contactez-nous</h1>
+    <!--<h1><center>Contactez-nous</center></h1>-->
+    
     <form id="contactForm">
+      <h1 style="text-align: center;">Contactez-nous</h1>
       <label for="name">Nom complet:</label>
       <input type="text" id="name" name="name" required>
       
