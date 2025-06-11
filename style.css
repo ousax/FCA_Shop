@@ -180,6 +180,12 @@ span:hover{
   padding: 0 8px;
   border-radius: 50%;
   float: right; /* Ensures it stays in the corner */
+  color: red;
+  font-weight: bolder;
+}
+.modal-content .close-button:hover {
+  padding: 0 10px;
+  background: #e2e2e2;
 }
 .modal-img {
   width: 100%;
@@ -224,6 +230,7 @@ li{
     border-radius: 10px;
     }
 /* Panier */
+
 .cart-modal {
   position: fixed;
   right: 0;
@@ -235,10 +242,30 @@ li{
   padding: 1rem;
   z-index: 999;
   transition: transform 0.3s;
+  /*modified*/
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .cart-content {
   display: flex;
   flex-direction: column;
+  /*modified men hna lt7t*/
+  display: flex;
+  flex-grow: 1;
+  overflow-y: auto; /* Allow cart items to scroll */
+}
+/*this section was added alongside the modifications */
+.cart-footer {
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+  background: white;
+  position: sticky;
+  bottom: 0;
+}
+.dark-mode .cart-footer {
+  background: #2b2b2b;
+  border-color: #444;
 }
 .cart-content h2 {
   margin-bottom: 1rem;
@@ -252,14 +279,90 @@ li{
 }
 #cartTotal {
   font-weight: bold;
-  margin-top: 1rem;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+}
+
+#ButtoncartTotal {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+#ButtoncartTotal:hover:not(:disabled) {
+  background-color: #0b5ed7;
+}
+#ButtoncartTotal:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.dark-mode #ButtoncartTotal {
+  background-color: #375a7f;
+}
+
+.dark-mode #ButtoncartTotal:hover:not(:disabled) {
+  background-color: #2d4b6a;
 }
 #closeCart {
   align-self: flex-end;
   font-size: 1.5rem;
   cursor: pointer;
 }
+/* Cart item styles */
+#cartItems li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+}
 
+.dark-mode #cartItems li {
+  border-color: #444;
+}
+
+.delete-item {
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0 0.5rem;
+  transition: transform 0.2s;
+}
+
+.delete-item:hover {
+  transform: scale(1.2);
+}
+
+.dark-mode .delete-item {
+  color: #ff6b7d;
+}
+
+.empty-cart-msg {
+  padding: 1rem;
+  color: #666;
+  text-align: center;
+  font-style: italic;
+}
+
+.dark-mode .empty-cart-msg {
+  color: #aaa;
+}
+.animate-bounce {
+  animation: bounce 0.5s;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
 /* Dark mode */
 .dark-mode {
   background-color: #1a1a1a;
@@ -775,6 +878,7 @@ header {
   color: white;
   border-color: #444;
 }
+
 /*IF YOU UNCOMMET THIS CODE IATKHSSER LOOK DIAL HME PAGE WHTA DIAL DES ELEMENTS*/
 /*#submitbuy{
   background-color: rgb(4, 100, 68);

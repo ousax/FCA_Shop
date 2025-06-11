@@ -1,22 +1,22 @@
 // script.js
 const rawProducts = [
-  ["Chaussures Antigravité", "images/Kangoo.avif", "DH", "Des chaussures révolutionnaires qui réduisent l'impact sur les articulations. Parfaites pour le fitness et la rééducation."],
+  ["Amandes Maroc", "images/amandes.jpg", "DH", "Amandes biologiques cultivées dans les régions fertiles du Maroc. Croquantes et pleines de nutriments."],
   ["Miel ZCH", "images/miel.jpg", "DH", "Miel 100% naturel produit dans les montagnes de l'Atlas. Riche en antioxydants et enzymes bénéfiques."],
   ["Dattes el mejhoul", "images/dattes.jpg", "DH", "Dattes premium du Maroc, sucrées naturellement et riches en fibres. Un super aliment énergétique."],
   ["Jus Dattes el mejhoul", "images/jusdattes.jpg", "DH", "Jus pur de dattes sans additifs. Source naturelle d'énergie et de minéraux essentiels."],
   ["Huile d'Argan", "images/zitargan.webp", "DH", "L'or liquide du Maroc. Hydrate en profondeur la peau et les cheveux. Produit selon des méthodes traditionnelles."],
-  ["Amandes Maroc", "images/amandes.jpg", "DH", "Amandes biologiques cultivées dans les régions fertiles du Maroc. Croquantes et pleines de nutriments."],
+  ["Huile d'Olive", "images/zitzitoun.jpg", "DH", "Huile d'olive extra vierge pressée à froid. Fruitée et riche en polyphénols antioxydants."],
   ["Safran Premium", "images/safran_.jpg", "DH", "Safran de première qualité récolté à la main. Un gramme d'or rouge pour sublimer vos plats."],
   ["Eau de Rose", "images/eau.jpg", "DH", "Hydrolat de rose naturelle pour tonifier et rafraîchir la peau. Parfum délicat et propriétés apaisantes."],
-  ["Pistaches Grillées", "images/pistaches.jpg", "DH", "Pistaches grillées à sec, sans sel ajouté. Une collation saine et savoureuse."],
   ["Thé Marocain", "images/dekkka.jpg", "DH", "Mélange exclusif de thé vert et de menthe fraîche. La boisson traditionnelle marocaine."],
   ["Couscous Fin", "images/COUSCOUS.jpg", "DH", "Semoule de blé dur de qualité supérieure. La base authentique du plat national marocain."],
   ["Tajine en Céramique", "images/tajines.png", "DH", "Tajine traditionnel pour une cuisson lente et savoureuse. Fabriqué par des artisans locaux."],
+  ["Pistaches Grillées", "images/pistaches.jpg", "DH", "Pistaches grillées à sec, sans sel ajouté. Une collation saine et savoureuse."],
   ["Savon Noir", "images/savon.jpg", "DH", "Savon naturel au ghassoul et huile d'olive. Nettoyant profond pour le corps et le visage."],
-  ["Huile d'Olive", "images/zitzitoun.jpg", "DH", "Huile d'olive extra vierge pressée à froid. Fruitée et riche en polyphénols antioxydants."],
-  ["Tapis Berbère", "images/zarbia.jpg", "DH", "Tapis tissé à la main par des artisans berbères. Motifs traditionnels et laine naturelle."],
   ["Parfum Royal Marocain", "images/bexor.jpg", "DH", "Un parfum exclusif inspiré des essences rares du Maroc. Notes de safran, bois de santal et fleur d'oranger."],
-  ["Collier fait main", "images/necklace.jpg", "DH", "Ce collier fait main présente un design traditionnel et est fabriqué avec soin à partir de matériaux naturels. C’est une pièce magnifique et unique, réalisée avec amour."]
+  ["Tapis Berbère", "images/zarbia.jpg", "DH", "Tapis tissé à la main par des artisans berbères. Motifs traditionnels et laine naturelle."],
+  ["Collier fait main", "images/necklace.jpg", "DH", "Ce collier fait main présente un design traditionnel et est fabriqué avec soin à partir de matériaux naturels. C’est une pièce magnifique et unique, réalisée avec amour."],
+  ["Chaussures Antigravité", "images/Kangoo.avif", "DH", "Des chaussures révolutionnaires qui réduisent l'impact sur les articulations. Parfaites pour le fitness et la rééducation."]
 ];
 
 function getRandomPrice(min = 20, max = 100) {
@@ -43,6 +43,7 @@ const cart = [];
 const cartCount = document.getElementById("cart-count");
 const cartItemsContainer = document.getElementById("cartItems");
 const cartTotal = document.getElementById("cartTotal");
+const ButtoncartTotal = document.getElementById("ButtoncartTotal");
 const notification = document.getElementById("notification");
 const productModal = document.getElementById("productModal");
 const modalContent = document.getElementById("modalContent");
@@ -89,9 +90,11 @@ function sortProducts() {
 }
 searchInput.addEventListener("input", filterProducts);
 sortSelect.addEventListener("change", sortProducts);
+/*old function that handles the cart 
 function updateCartDisplay() {
   cartItemsContainer.innerHTML = "";
   let total = 0;
+  
   cart.forEach(item => {
     const li = document.createElement("li");
     li.textContent = `${item.name} - ${item.price} DH`;
@@ -101,7 +104,104 @@ function updateCartDisplay() {
   cartCount.textContent = cart.length;
   cartTotal.textContent = `${total} DH`;
 }
+*/
+/*
+new function that handles the cart
+*/
+/*new code after adding the delete items 
+function updateCartDisplay() {
+  cartItemsContainer.innerHTML = "";
+  let total = 0;
+  
+  cart.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = `${item.name} - ${item.price} DH`;
+    cartItemsContainer.appendChild(li);
+    total += item.price;
+  });
+  
+  cartCount.textContent = cart.length;
+  cartTotal.textContent = `${total} DH`;
+  
+  // Enable/disable order button based on cart content
+  const orderButton = document.getElementById("ButtoncartTotal");
+  orderButton.disabled = cart.length === 0;
+  
+  // Add click handler if not already added
+  if (!orderButton.hasAttribute('data-listener-added')) {
+    orderButton.addEventListener('click', proceedToCheckout);
+    orderButton.setAttribute('data-listener-added', 'true');
+  }
+}
 
+function proceedToCheckout() {
+  if (cart.length > 0) {
+    // Your checkout logic here
+    alert('Redirection vers la page de commande...');
+    //window.location.href = `buy1.html?n=${}&p=${total}`; fix this adapt it to the buy1 it might contain more than one product 
+  }
+}
+*/
+// the start of the new code
+function updateCartDisplay() {
+  cartItemsContainer.innerHTML = "";
+  let total = 0;
+
+  if (cart.length === 0) {
+    const emptyMsg = document.createElement("li");
+    emptyMsg.className = "empty-cart-msg";
+    emptyMsg.textContent = "Votre panier est vide";
+    cartItemsContainer.appendChild(emptyMsg);
+  } else {
+    cart.forEach((item, index) => {
+      const li = document.createElement("li");
+      
+      // Product info
+      const itemInfo = document.createElement("span");
+      itemInfo.textContent = `${item.name} - ${item.price} DH`;
+      
+      // Delete button
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "delete-item";
+      deleteBtn.innerHTML = "&times;";
+      deleteBtn.title = "Supprimer";
+      deleteBtn.addEventListener("click", () => removeFromCart(index));
+      
+      li.appendChild(itemInfo);
+      li.appendChild(deleteBtn);
+      cartItemsContainer.appendChild(li);
+      total += item.price;
+    });
+  }
+
+  cartCount.textContent = cart.length;
+  cartTotal.textContent = `${total} DH`;
+  document.getElementById("ButtoncartTotal").disabled = cart.length === 0;
+}
+
+function removeFromCart(index) {
+  // Remove item from cart array
+  const removedItem = cart.splice(index, 1)[0];
+  
+  // Update display
+  updateCartDisplay();
+  
+  // Show notification
+  showNotification(`${removedItem.name} a été supprimé du panier`);
+  
+  // Optional: Add animation
+  animateCartUpdate();
+}
+
+function animateCartUpdate() {
+  const cartIcon = document.getElementById("cart-toggle");
+  cartIcon.classList.add("animate-bounce");
+  setTimeout(() => {
+    cartIcon.classList.remove("animate-bounce");
+  }, 1000);
+}
+
+//end of it 
 function showNotification(message) {
   notification.textContent = message;
   notification.classList.remove("hidden");
@@ -126,7 +226,6 @@ function openProductModal(product) {
     window.location.href = `buy1.html?n=${product.name}&p=${product.price}`;
   };
   productModal.classList.remove("hidden");
-
   // Fix: Stop event propagation and ensure the button is clickable
   document.getElementById("closeModal").onclick = (e) => {
     e.stopPropagation();  
@@ -150,6 +249,7 @@ function createProductCard(product) {
     <button class="buy-btn">Voir</button> <!--modifitha--> 
     <button class="add-cart-btn">Ajouter au panier</button>
   `;
+  div.querySelector(".product-img").addEventListener("click", () => openProductModal(product));
   div.querySelector(".buy-btn").addEventListener("click", () => openProductModal(product));
   div.querySelector(".add-cart-btn").addEventListener("click", () => {
     cart.push(product);
@@ -178,10 +278,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("closeCart").addEventListener("click", () => {
     document.getElementById("cartModal").classList.add("hidden");
   });
-
   document.getElementById("themeToggle").addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
     const isDark = document.body.classList.contains("dark-mode");
     document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
   });
+  
 });

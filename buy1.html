@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -103,11 +104,67 @@
     <p>&copy; 2025 FCA shop. Tous droits réservés.</p>
   </footer>
   <script>
+    const rawProducts = [
+      ["Amandes Maroc", "images/amandes.jpg", "DH", "Amandes biologiques cultivées dans les régions fertiles du Maroc. Croquantes et pleines de nutriments."],
+      ["Miel ZCH", "images/miel.jpg", "DH", "Miel 100% naturel produit dans les montagnes de l'Atlas. Riche en antioxydants et enzymes bénéfiques."],
+      ["Dattes el mejhoul", "images/dattes.jpg", "DH", "Dattes premium du Maroc, sucrées naturellement et riches en fibres. Un super aliment énergétique."],
+      ["Jus Dattes el mejhoul", "images/jusdattes.jpg", "DH", "Jus pur de dattes sans additifs. Source naturelle d'énergie et de minéraux essentiels."],
+      ["Huile d'Argan", "images/zitargan.webp", "DH", "L'or liquide du Maroc. Hydrate en profondeur la peau et les cheveux. Produit selon des méthodes traditionnelles."],
+      ["Huile d'Olive", "images/zitzitoun.jpg", "DH", "Huile d'olive extra vierge pressée à froid. Fruitée et riche en polyphénols antioxydants."],
+      ["Safran Premium", "images/safran_.jpg", "DH", "Safran de première qualité récolté à la main. Un gramme d'or rouge pour sublimer vos plats."],
+      ["Eau de Rose", "images/eau.jpg", "DH", "Hydrolat de rose naturelle pour tonifier et rafraîchir la peau. Parfum délicat et propriétés apaisantes."],
+      ["Thé Marocain", "images/dekkka.jpg", "DH", "Mélange exclusif de thé vert et de menthe fraîche. La boisson traditionnelle marocaine."],
+      ["Couscous Fin", "images/COUSCOUS.jpg", "DH", "Semoule de blé dur de qualité supérieure. La base authentique du plat national marocain."],
+      ["Tajine en Céramique", "images/tajines.png", "DH", "Tajine traditionnel pour une cuisson lente et savoureuse. Fabriqué par des artisans locaux."],
+      ["Pistaches Grillées", "images/pistaches.jpg", "DH", "Pistaches grillées à sec, sans sel ajouté. Une collation saine et savoureuse."],
+      ["Savon Noir", "images/savon.jpg", "DH", "Savon naturel au ghassoul et huile d'olive. Nettoyant profond pour le corps et le visage."],
+      ["Parfum Royal Marocain", "images/bexor.jpg", "DH", "Un parfum exclusif inspiré des essences rares du Maroc. Notes de safran, bois de santal et fleur d'oranger."],
+      ["Tapis Berbère", "images/zarbia.jpg", "DH", "Tapis tissé à la main par des artisans berbères. Motifs traditionnels et laine naturelle."],
+      ["Collier fait main", "images/necklace.jpg", "DH", "Ce collier fait main présente un design traditionnel et est fabriqué avec soin à partir de matériaux naturels. C’est une pièce magnifique et unique, réalisée avec amour."],
+      ["Chaussures Antigravité", "images/Kangoo.avif", "DH", "Des chaussures révolutionnaires qui réduisent l'impact sur les articulations. Parfaites pour le fitness et la rééducation."]
+    ]; // verifier wach les prix et les noms des produits sont identiques et non pas manipuler par l'utilisateur (price manipulation issue)
+    // on ne peut pas connaitre le prix d'un produit car nous avons utilisé des fonctions qui générent d'une manière aléatoire les prix des prodits
+    // ce qui'il est conseillé de faire pour résoudre ce problème c'est de vérifier le nom du produit est de le comparer de celui dans la variable rawProducts
     const urlParams = new URLSearchParams(window.location.search); // best practice
     const price = urlParams.get("p");
     const product_name = urlParams.get("n");
-    
     if (price && product_name) {
+      const products = rawProducts.map(product => ({
+        name: product[0],
+      }));
+      /*[...products.forEach(ele => {
+        console.log(ele.name == product_name)
+        switch (ele) {
+          case ele.name === product_name:
+            console.log("The product is the right one");
+            break;
+          case ele.name != product_name:
+            console.log("Nope not the right product homie");
+            break;
+          default:
+            console.log("oops you lost bro");
+            break;
+        }        
+      })];*/
+      const VNames = [...products];
+      for(var i = 0;i<VNames.length; i++){
+        if(VNames[i].name === product_name){
+          console.log("Le produit existe")
+          break;
+        }
+        else if(VNames[i].name != product_name && ((VNames.length-1) != i)){
+          console.log("Le produit choisi n'est pas disponible pour le moment", i, VNames.length);
+
+        }
+        else{
+          alert("Le produit choisi n'est pas disponible pour le moment");
+          window.location.href = "index.html";
+        }
+      }
+      /*if(){
+        console.log("Le produit que vous avez choisi n'est pas disponible pour le moment!");
+        window.location.href = "index.html";
+      }*/
       const safeProductName = document.createTextNode(decodeURIComponent(product_name));
       const safePrice = document.createTextNode(price + ' DH');
     
@@ -363,14 +420,14 @@
     const domain = emailParts[1].toLowerCase();
     return allowedDomains.includes(domain) || domain.endsWith(".edu");
   }
-
+  
   if (!isValidEmail(email)) {
     document.getElementById("error").hidden = false;
     return;
   } else {
     document.getElementById("error").hidden = true;
   }
-
+  
   if (!isValidPhone(phone)) {
     document.getElementById("error_tel").hidden = false;
     return;
@@ -396,6 +453,7 @@
   } else {
     document.getElementById("error_card").hidden = true;
   }
+  
   const date = new Date().toJSON();
   const tn = `FCA_SHOP_${(Math.random() * 233494 + 334).toFixed(0)}`;
 
