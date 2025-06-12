@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Finaliser la commande</title>
+  <style>
+    .checkout-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    }
+
+    .order-summary {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    }
+
+    .dark-mode .order-summary {
+    background: #2b2b2b;
+    }
+
+    .order-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+    }
+
+    .dark-mode .order-item {
+    border-color: #444;
+    }
+
+    .order-total {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    text-align: right;
+    }
+
+    .checkout-form {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .dark-mode .checkout-form {
+    background: #2b2b2b;
+    }
+    #ButtoncartTotal {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  }
+  </style>
+  <link href="style.css" rel="stylesheet">
+  <div class="logo-nav"></div>
+</head>
+<body>
+    <header>
+
+    <a href="index.html"><img src="images/fca-icon.png" alt="FCA Shop" class="logo"/></a>
+    <div><h1 style="left: 2rem;">Finaliser votre commande</h1></div>
+    </header>
+  <div class="checkout-container">
+    
+    
+    <div class="order-summary">
+      <h2>Récapitulatif</h2>
+      <div id="orderSummary"></div>
+      <p class="order-total">Total: <span id="orderTotal">0 DH</span></p>
+    </div>
+    
+    <form class="checkout-form">
+      <!-- Vos champs de formulaire ici -->
+      <button id="ButtoncartTotal" type="submit">Payer maintenant</button>
+    </form>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const products = [];
+    let total = 0;
+
+    // Récupérer tous les paramètres produits
+    params.forEach((value, key) => {
+        if (key.startsWith('products[')) {
+        const match = key.match(/products\[(\d+)\]\[(\w+)\]/);
+        if (match) {
+            const index = parseInt(match[1]);
+            const property = match[2];
+            
+            if (!products[index]) {
+            products[index] = {};
+            }
+            
+            products[index][property] = property === 'name' ? decodeURIComponent(value) : value;
+        }
+        } else if (key === 'total') {
+        total = parseFloat(value);
+        }
+    });
+
+    // Afficher les produits
+    const orderSummary = document.getElementById('orderSummary');
+    products.forEach(product => {
+        const div = document.createElement('div');
+        div.className = 'order-item';
+        div.innerHTML = `
+        <h3>${product.name}</h3>
+        <p>Prix: ${product.price} DH</p>
+        `;
+        orderSummary.appendChild(div);
+    });
+
+    // Afficher le total
+    document.getElementById('orderTotal').textContent = `${total} DH`;
+    });
+  </script>
+  
+  
+</body>
+</html>

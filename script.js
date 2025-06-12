@@ -176,9 +176,34 @@ function updateCartDisplay() {
 
   cartCount.textContent = cart.length;
   cartTotal.textContent = `${total} DH`;
-  document.getElementById("ButtoncartTotal").disabled = cart.length === 0;
+  
+  const orderButton = document.getElementById("ButtoncartTotal");
+  orderButton.disabled = cart.length === 0;
+  
+  // Remove previous event listener to avoid duplicates
+  orderButton.replaceWith(orderButton.cloneNode(true));
+  
+  // Add new event listener
+  document.getElementById("ButtoncartTotal").addEventListener("click", proceedToCheckout);
 }
+function proceedToCheckout() {
+  if (cart.length === 0) return;
 
+  // Créer les paramètres URL
+  const params = new URLSearchParams();
+  
+  cart.forEach((item, index) => {
+    params.append(`products[${index}][name]`, encodeURIComponent(item.name));
+    params.append(`products[${index}][price]`, item.price);
+  });
+  
+  params.append('total', cart.reduce((sum, item) => sum + item.price, 0));
+  function initiateCart(){
+    
+  }
+  // Redirection vers la page de commande
+  window.location.href = `buyPanier.html?${params.toString()}`;
+}
 function removeFromCart(index) {
   // Remove item from cart array
   const removedItem = cart.splice(index, 1)[0];
