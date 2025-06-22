@@ -21,8 +21,7 @@
         </ul>
       </nav>
       <div class="actions">
-        <button id="themeToggle" hidden>🌙</button>
-        <button id="cart-toggle" hidden>🛒 (<span id="cart-count">0</span>)</button>
+        <button id="themeToggle">🌙</button>
       </div>
     </div>
   </header>
@@ -46,7 +45,16 @@
       <p>Notre équipe est composée de passionnés qui sélectionnent avec soin chaque produit proposé dans notre boutique. Nous travaillons directement avec les artisans locaux pour vous offrir des produits uniques et authentiques.</p>
     </div>
   </main>
-
+  <script>
+    document.getElementById("themeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
+  });
+  </script>
   <script src="script.js"></script>
+    <footer>
+    <p>&copy; 2025 FCA shop. Tous droits réservés.</p>
+  </footer>
 </body>
 </html>

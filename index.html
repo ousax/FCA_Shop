@@ -46,12 +46,23 @@
     </nav>
       <div class="actions">
         <button id="themeToggle">🌙</button>
+        <div class="languages">
+            <i class="fas fa-language"></i>
+            <select id="languageSelect">
+              <option value="français">Français</option>
+              <option value="anglais">Anglais</option>
+              <option value="arabe">العربية</option>
+            </select>
+        </div>
         <button id="cart-toggle">🛒 (<span id="cart-count">0</span>)</button>
       </div>
     </div>
   </header>
 
   <main>
+   <section id="marqueeProduct">
+  <img src="images/amandes.jpg" id="marqueeImage" />
+  </section>
     <section id="productsGrid" class="grid-container"></section>
   </main>
 
@@ -73,5 +84,8 @@
 </div>
 
   <script src="script.js"></script>
+  <footer>
+    <p>&copy; 2025 FCA shop. Tous droits réservés.</p>
+  </footer>
 </body>
 </html>

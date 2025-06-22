@@ -24,8 +24,7 @@
         </ul>
       </nav>
       <div class="actions">
-        <button id="themeToggle" hidden>🌙</button>
-        <button id="cart-toggle" hidden>🛒 (<span id="cart-count">0</span>)</button>
+        <button id="themeToggle">🌙</button>
       </div>
     </div>
   </header>
@@ -54,12 +53,11 @@
       <h2>Autres moyens de contact</h2>
       <p><strong>Email:</strong> contact@fcashop.com</p>
       <p><strong>Téléphone:</strong> +212 5 22 34 56 78</p>
-      <p><strong>Adresse:</strong> 123 Avenue Hassan II, Casablanca, Maroc</p>
+      <p><strong>Adresse:</strong> cité universitaire, Mghila, Béni Mellal</p>
     </div>
   </main>
 
   <script src="script.js"></script>
-  <!-- Ajoutez cette section avant le </body> -->
   <div class="chatbot-container">
     <div class="chatbot-header">
       <h3>Assistant Virtuel</h3>
@@ -74,5 +72,15 @@
   <button class="chatbot-toggle" id="chatbotToggle">
     <i class="fas fa-robot"></i>
   </button>
+    <footer>
+    <p>&copy; 2025 FCA shop. Tous droits réservés.</p>
+  </footer>
+  <script>
+    document.getElementById("themeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
+  });
+  </script>
 </body>
 </html>

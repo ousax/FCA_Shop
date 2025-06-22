@@ -223,6 +223,26 @@ li{
     border: 1px solid #ddd;
     border-radius: 10px;
     }
+.languages {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.languages i {
+  position: absolute;
+  left: 10px;
+  color: #777;
+  pointer-events: none;
+}
+
+.languages select {
+  padding: 0.5rem 1rem 0.5rem 2rem;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background-color: white;
+  appearance: none;
+}
 /* Panier */
 .cart-modal {
   position: fixed;
@@ -325,7 +345,9 @@ form label {
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
-
+.dark-mode label, .dark-mode strong{
+  color: white;
+}
 form input,
 form textarea {
   width: 100%;

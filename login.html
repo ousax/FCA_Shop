@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Se connecter</title>
+  <link href="login.css" rel="stylesheet">
+  <div class="logo-nav"></div>
+</head>
+<body>
+    <header>
+
+    <a href="index.html"><img src="images/fca-icon.png" alt="FCA Shop" class="logo"/></a>
+    <div class="actions">
+        <button id="themeToggle">🌙</button>
+        <div class="languages">
+          <i class="fas fa-language"></i>
+            <select id="languageSelect">
+              <option value="français">Français</option>
+              <option value="anglais">Anglais</option>
+              <option value="arabe">العربية</option>
+            </select>
+        </div>
+    </div>
+    </header>
+  <div class="checkout-container">
+    <div class="order-summary">
+        <p><h1 style="text-align: center;">Se connecter</h1></p>
+        <form action="#" method="post">        
+        <!--<label id="produit_choisi"></label><br><br>-->
+        <label>Email ou nom d'utilisateur</label>
+        <input type="text" name="email" id="email" required><br>
+        <label>Mot de passe</label>
+        <p id="passwordFIELD_P"><input type="password" name="password" id="password" required><input id="showpassword" type="button" value="show"><p hidden id="error_pass">Veuillez saisir votre mot de passe</p><br></p>  
+        <label>Se souvenir<input type="checkbox" id="sesouvenir"></label><a href="motdepassoublie.html" class="motdepassoublie">Récuperer votre compte</a><br><br>
+        <button type="submit">Se connecter</button>
+        </form>
+    </div>
+  </div>
+  <script>
+    function ChangeLanguage(){
+      
+    }
+    document.getElementById("themeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
+  });
+    const password = document.getElementById("password"); 
+    const email = document.getElementById("email");
+    const showpassword = document.getElementById("showpassword"); 
+    showpassword.addEventListener("click", () => {
+      if(password.value != ""){
+        if(password.type === "password"){
+          // hide me
+          password.type = "text"; 
+          console.log("its already a password type");
+          showpassword.value = "hide";
+
+        }
+        else{
+          // show me
+          password.type = "password";
+          showpassword.value = "show";
+        }
+      }
+      else{
+        alert("password field is empty");
+      }
+    })
+    
+  </script>
+  <footer>
+    <p>&copy; 2025 FCA shop. Tous droits réservés.</p>
+  </footer>
+  </body>
+  </html>

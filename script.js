@@ -18,7 +18,22 @@ const rawProducts = [
   ["Collier fait main", "images/necklace.jpg", "DH", "Ce collier fait main présente un design traditionnel et est fabriqué avec soin à partir de matériaux naturels. C’est une pièce magnifique et unique, réalisée avec amour."],
   ["Chaussures Antigravité", "images/Kangoo.avif", "DH", "Des chaussures révolutionnaires qui réduisent l'impact sur les articulations. Parfaites pour le fitness et la rééducation."]
 ];
+const imgElement = document.getElementById("marqueeImage");
+let index = 0;
 
+setInterval(() => {
+  // Fade out
+  imgElement.classList.add("fade-out");
+
+  // After fade-out transition ends, change image and fade back in
+  setTimeout(() => {
+    index = (index + 1) % rawProducts.length;
+    imgElement.src = rawProducts[index][1];
+
+    // Trigger fade-in
+    imgElement.classList.remove("fade-out");
+  }, 1000); // Delay matches CSS transition duration
+}, 3000);
 function getRandomPrice(min = 20, max = 100) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -51,7 +66,7 @@ const closeModal = document.getElementById("closeModal");
 let filteredProducts = [...products];
 const searchInput = document.getElementById("searchInput");
 const sortSelect = document.getElementById("sortSelect");
-console.log(sortSelect);
+const languageSelect = document.getElementById("languageSelect");
 //console.log();
 function filterProducts() {
   const searchTerm = searchInput.value.toLowerCase();
@@ -90,6 +105,23 @@ function sortProducts() {
 }
 searchInput.addEventListener("input", filterProducts);
 sortSelect.addEventListener("change", sortProducts);
+function changeLanguage() {
+  const targetLanguage = languageSelect.value;
+  switch (targetLanguage) {
+      case 'arabe':
+        console.log("لقد قمت بتغير اللغة إلى العربية");
+        break;
+      case 'français':
+        console.log("Your language now is set to français");
+        break;
+      case 'anglais':
+        console.log("Your language now is set to anglais");
+        break;
+      default:
+        return 0;
+    }
+  }
+languageSelect.addEventListener("change", changeLanguage);
 /*old function that handles the cart 
 function updateCartDisplay() {
   cartItemsContainer.innerHTML = "";
@@ -308,5 +340,4 @@ document.addEventListener("DOMContentLoaded", () => {
     const isDark = document.body.classList.contains("dark-mode");
     document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
   });
-  
 });

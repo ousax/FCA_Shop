@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <style>
+    body { font-family: Arial; padding: 2rem; background: #f5f5f5; }
+    h1 { text-align: center; }
+    .product-form, .product-list { background: white; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input, textarea { width: 100%; margin-bottom: 0.5rem; padding: 0.5rem; }
+    button { padding: 0.5rem 1rem; margin-right: 0.5rem; cursor: pointer; }
+    .product-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding: 0.5rem 0; }
+    img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
+    .actions button { margin-left: 0.5rem; }
+  </style>
+</head>
+<body>
+  <script>
+    const password = prompt("Mot de passe admin ?");
+    if (password !== "admin123") {
+      alert("Accès refusé");
+      window.location.href = "/";
+    }
+  </script>
+
+  <h1>Panneau d'administration</h1>
+
+  <section class="product-form">
+    <h2>Ajouter / Modifier un produit</h2>
+    <input id="name" placeholder="Nom du produit">
+    <input id="image" placeholder="Chemin de l'image (ex: images/img.jpg)">
+    <input id="price" placeholder="Devise (ex: DH)">
+    <textarea id="desc" placeholder="Description"></textarea>
+    <button onclick="saveProduct()">Sauvegarder</button>
+    <button onclick="clearForm()">Vider</button>
+    <input type="hidden" id="editIndex">
+  </section>
+
+  <section class="product-list">
+    <h2>Produits</h2>
+    <div id="productContainer"></div>
+    <button onclick="downloadJSON()">Exporter JSON</button>
+    <input type="file" onchange="uploadJSON(event)">
+  </section>
+
+  <script>
+    let products = JSON.parse(localStorage.getItem("products")) || [];
+
+    function renderProducts() {
+      const container = document.getElementById("productContainer");
+      container.innerHTML = "";
+      products.forEach((p, i) => {
+        const row = document.createElement("div");
+        row.className = "product-item";
+        row.innerHTML = `
+          <img src="${p[1]}">
+          <strong>${p[0]}</strong>
+          <small>${p[2]}</small>
+          <div class="actions">
+            <button onclick="editProduct(${i})">Edit</button>
+            <button onclick="deleteProduct(${i})">Supprimer</button>
+            <button onclick="toggleAvailable(${i})">
+              ${p[4] === false ? 'Indisponible' : 'Disponible'}
+            </button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function saveProduct() {
+      const name = document.getElementById("name").value;
+      const image = document.getElementById("image").value;
+      const price = document.getElementById("price").value;
+      const desc = document.getElementById("desc").value;
+      const index = document.getElementById("editIndex").value;
+
+      if (index) {
+        products[index] = [name, image, price, desc, products[index][4]];
+      } else {
+        products.push([name, image, price, desc, true]);
+      }
+
+      localStorage.setItem("products", JSON.stringify(products));
+      renderProducts();
+      clearForm();
+    }
+
+    function clearForm() {
+      document.getElementById("name").value = "";
+      document.getElementById("image").value = "";
+      document.getElementById("price").value = "";
+      document.getElementById("desc").value = "";
+      document.getElementById("editIndex").value = "";
+    }
+
+    function editProduct(i) {
+      const p = products[i];
+      document.getElementById("name").value = p[0];
+      document.getElementById("image").value = p[1];
+      document.getElementById("price").value = p[2];
+      document.getElementById("desc").value = p[3];
+      document.getElementById("editIndex").value = i;
+    }
+
+    function deleteProduct(i) {
+      if (confirm("Supprimer ce produit ?")) {
+        products.splice(i, 1);
+        localStorage.setItem("products", JSON.stringify(products));
+        renderProducts();
+      }
+    }
+
+    function toggleAvailable(i) {
+      products[i][4] = products[i][4] === false ? true : false;
+      localStorage.setItem("products", JSON.stringify(products));
+      renderProducts();
+    }
+
+    function downloadJSON() {
+      const blob = new Blob([JSON.stringify(products)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "products.json";
+      a.click();
+    }
+
+    function uploadJSON(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function () {
+        try {
+          products = JSON.parse(reader.result);
+          localStorage.setItem("products", JSON.stringify(products));
+          renderProducts();
+        } catch (e) {
+          alert("Fichier invalide");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>

@@ -29,15 +29,18 @@
       </ul>
     </nav>
     <div class="actions">
-      <button id="themeToggle" hidden>🌙</button>
-      <button id="cart-toggle" hidden>🛒 (<span id="cart-count">0</span>)</button>
+      <button id="themeToggle">🌙</button>
     </div>
+    <div class="languages">
+            <i class="fas fa-language"></i>
+            <select id="languageSelect">
+              <option value="français">Français</option>
+              <option value="anglais">Anglais</option>
+              <option value="arabe">العربية</option>
+            </select>
+      </div>
     </div>
   </header>
-
-    
-  </header>
-
   <main>
     <form id="orderForm">
       <h1 style="text-align: center;">vous avez fait le bon choix </h1>
@@ -88,7 +91,7 @@
     <input type="text" name="cardNumber"><br>
     <div hidden style='color: red; font-size: 15px; align-items: center; font-weight: bolder;' id="error_card">Le numéro de cette carte bancaire n'est pas valide</div><br>
     <label>Date d'expiration</label> 
-    <input type="text" name="expiration" placeholder="MM/AA" maxlength="4"><br>
+    <input type="text" name="expiration" placeholder="MM/AA" maxlength="5"><br>
     <div hidden style='color: red; font-size: 15px; align-items: center; font-weight: bolder;' id="error_expiration">La date de cette carte bancaire n'est pas valide</div><br>
     <label>CVV:</label><br>
     <input type="text" name="cvv" maxlength="4">
@@ -104,6 +107,11 @@
     <p>&copy; 2025 FCA shop. Tous droits réservés.</p>
   </footer>
   <script>
+    document.getElementById("themeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
+  });
     const rawProducts = [
       ["Amandes Maroc", "images/amandes.jpg", "DH", "Amandes biologiques cultivées dans les régions fertiles du Maroc. Croquantes et pleines de nutriments."],
       ["Miel ZCH", "images/miel.jpg", "DH", "Miel 100% naturel produit dans les montagnes de l'Atlas. Riche en antioxydants et enzymes bénéfiques."],
@@ -125,6 +133,19 @@
     ]; // verifier wach les prix et les noms des produits sont identiques et non pas manipuler par l'utilisateur (price manipulation issue)
     // on ne peut pas connaitre le prix d'un produit car nous avons utilisé des fonctions qui générent d'une manière aléatoire les prix des prodits
     // ce qui'il est conseillé de faire pour résoudre ce problème c'est de vérifier le nom du produit est de le comparer de celui dans la variable rawProducts
+    const productsWithTVA = {
+    "Huile d'Argan": 0.20,
+    "Huile d'Olive": 0.07,
+    "Safran Premium": 0.07,
+    "Eau de Rose": 0.20,
+    "Tajine en Céramique": 0.20,
+    "Savon Noir": 0.20,
+    "Parfum Royal Marocain": 0.20,
+    "Tapis Berbère": 0.20,
+    "Collier fait main": 0.20,
+    "Chaussures Antigravité": 0.20
+  };
+
     const urlParams = new URLSearchParams(window.location.search); // best practice
     const price = urlParams.get("p");
     const product_name = urlParams.get("n");
@@ -187,40 +208,20 @@
       alert("Veuillez choisir un produit!");
       window.location.href = "index.html";
     }
-  </script>
-  <script>
+ 
   const form = document.getElementById("orderForm");
   const downloadPDF = document.getElementById("downloadPDF");
   let formDataText = '';
-  
-    // afficher ou faire dispariatre les cases lorsque on click une telle option
-    /*paypalCheckbox.addEventListener('change', () => { 
-      if (paypalCheckbox.checked) {
-        paypalFields.classList.remove('hidden');
-        cardCheckbox.checked = false;
-        cardFields.classList.add('hidden');
-      } else {
-        paypalFields.classList.add('hidden');
-      }
-    });  
-    cardCheckbox.addEventListener('change', () => {
-      if (cardCheckbox.checked) {
-        cardFields.classList.remove('hidden');
-        paypalCheckbox.checked = false;
-        paypalFields.classList.add('hidden');
-      } else {
-        cardFields.classList.add('hidden');
-      }
-    }); // fin dialha*/
     const paypalBtn = document.getElementById('paypalBtn');
     const cardBtn = document.getElementById('cardBtn');
     const paypalFields = document.getElementById('paypalFields');
     const cardFields = document.getElementById('cardFields');
     const paypalFieldsInputs = paypalFields.querySelectorAll("input");
     const cardFieldsInputs = cardFields.querySelectorAll("input");
+    const languageSelect = document.getElementById("languageSelect");
 
     paypalBtn.addEventListener('click', () => {
-      const isSelected = paypalBtn.classList.contains('selected');
+    const isSelected = paypalBtn.classList.contains('selected');
 
       if (!isSelected) {
         // Select PayPal, deselect Card
@@ -276,138 +277,27 @@
         cardFields.classList.add('hidden');
       }
     });
-    
-  /*
-    form.addEventListener("submit", function(event) {
-      alert(/you submitted the form/);
-    event.preventDefault();
-    const nom = form.querySelector('[name="nom"]').value;
-    const adresse = form.querySelector('[name="adresse"]').value;
-    const email = form.querySelector('[name="email"]').value;
-    const phone = form.querySelector('[name="phone"]').value;
-    const paypalEmail = form.querySelector('[name="paypalEmail"]')?.value || 'N/A';
-    const num_card = form.querySelector('[name="cardNumber"]')?.value || 'N/A';
-    const expirationDate  = form.querySelector('[name="expiration"]')?.value || 'N/A';
-    const cvv = form.querySelector('[name="cvv"]')?.value || 'N/A';
-    const paymentMethod = document.getElementById("paypalCheckbox").checked
-      ? "PayPal"
-      : document.getElementById("cardCheckbox").checked
-      ? "Carte Bancaire"
-      : "Non spécifié"; // bach ghadi ykhless ??
-      //console.log(cvv+"  "+num_card+" "+expirationDate);
-      function isValidPhone(phone) {
-      return /^\+?\d{9,15}$/.test(phone);
-    }
-    function isValidEmail(email) {
-    const allowedDomains = ["gmail.com", "yahoo.com", "proton.me", "protonmail.com"];
-    const emailParts = email.split("@");
-    if (emailParts.length !== 2) return false;
-    const domain = emailParts[1].toLowerCase();
-    return (
-      allowedDomains.includes(domain) ||
-      domain.endsWith(".edu")
-    );
-    }
-    if (!isValidEmail(email)) {
-      document.getElementById("error").hidden=false;
-     // alert("Email non autorisé. Utilisez Gmail, Yahoo, Proton ou un domaine .edu.");
-    return;
-  }
-    else{
-      document.getElementById("error").hidden=true;
-    }
-    if (!isValidPhone(phone)) {
-      document.getElementById("error_tel").hidden=false;
-    //alert("Numéro de téléphone invalide. Entrez entre 9 et 15 chiffres.");
-    return;
-  }
-    else{
-      document.getElementById("error_tel").hidden=true;
-    }
-      const date = new Date().toJSON(); 
-      const tn = `FCA_SHOP_${(Math.random() * 233494 + 334).toFixed(0)}`;
-      if(paymentMethod==="Carte Bancaire" && (cvv!=""&&num_card!=""&&expirationDate!="")){
-        let informations_paiement = 
-        `Numéro de carte:: ${num_card}\nDate d'expiration: ${expirationDate}\ncvv: ${cvv}`
-      }
-      else{
-        let informations_paiement =  `Email Paypal: ${paypalEmail}`
-      }
-      const INFOS = (paymentMethod==="Carte Bancaire" && (cvv!=""&&num_card!=""&&expirationDate!="")) ? `Numéro de carte:: ${num_card}\nDate d'expiration: ${expirationDate}\ncvv: ${cvv}` : `Email Paypal: ${paypalEmail}`
-      // ligne fo9ania verify moyen de paiement 
-      //console.log(INFOS);
-      formDataText = `
-        Ticket FCA SHOP
-        Transaction N°: ${tn}
-        Date: ${date}
-        Produit Choisi: ${product_name}
-        Nom: ${nom}
-        Adresse: ${adresse}
-        Email: ${email}
-        Téléphone: ${phone}
-        Mode de Paiement: ${paymentMethod}
-        ${INFOS}
-    `.trim();
-    downloadPDF.style.display = "block"; // afficher le button telecharger dial fichier pdf li tgenera
-  });
-  downloadPDF.addEventListener("click", function() {
-    async function generateStyledPDF(formDataText) {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    // Store title
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(20);
-    doc.setTextColor(0, 102, 204);
-    doc.text("FCA SHOP - Reçu de transaction", 10, 20);
-    const now = new Date().toLocaleString("fr-FR");
-    doc.setFontSize(10);
-    doc.setTextColor(100);
-    doc.text(`Date: ${now}`, 150, 20);
-    doc.setDrawColor(0);
-    doc.line(10, 25, 200, 25);
-    doc.setFontSize(14);
-    doc.setTextColor(33, 33, 33);
-    doc.text("Détails du client:", 10, 35);
-    const lines = formDataText.split('\n');
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-    let y = 45;
-    for (const line of lines) {
-      doc.text(line.trim(), 15, y);
-      y += 8;
-    }
-    doc.setDrawColor(220);
-    doc.rect(10, 30, 190, y - 30);
-    // Footer
-    doc.setFontSize(10);
-    doc.setTextColor(120);
-    doc.text("Merci pour votre commande !", 10, 280);
-    doc.save(`commande_confirmee_${now}.pdf`);
-  }
-  generateStyledPDF(formDataText);
-      window.location.href = "index.html" // redirect lhomepage apres l'inpression dial reçu
-  // vider dok les cases 
-  });*/
+   
   form.addEventListener("submit", function(event) {
   event.preventDefault();
+
   const nom = form.querySelector('[name="nom"]').value;
   const adresse = form.querySelector('[name="adresse"]').value;
   const email = form.querySelector('[name="email"]').value;
   const phone = form.querySelector('[name="phone"]').value;
-  const paypalEmail = form.querySelector('[name="paypalEmail"]')?.value || 'N/A';
-  const num_card = form.querySelector('[name="cardNumber"]')?.value || 'N/A';
-  const expirationDate = form.querySelector('[name="expiration"]')?.value || 'N/A';
-  const cvv = form.querySelector('[name="cvv"]')?.value || 'N/A';
+  const paypalEmail = form.querySelector('[name="paypalEmail"]')?.value || '';
+  const num_card = form.querySelector('[name="cardNumber"]')?.value || '';
+  const expirationDate = form.querySelector('[name="expiration"]')?.value || '';
+  const cvv = form.querySelector('[name="cvv"]')?.value || '';
 
-  // Updated payment method detection using selected class on icons
-  const paypalSelected = document.getElementById("paypalBtn").classList.contains("selected");
-  const cardSelected = document.getElementById("cardBtn").classList.contains("selected");
+  const paypalSelected = paypalBtn.classList.contains("selected");
+  const cardSelected = cardBtn.classList.contains("selected");
 
   const paymentMethod = paypalSelected
     ? "PayPal"
     : cardSelected
     ? "Carte Bancaire"
-    : "Non spécifié"; // What will happen if none selected?
+    : "Non spécifié";
 
   function isValidPhone(phone) {
     return /^\+?\d{9,15}$/.test(phone);
@@ -415,73 +305,101 @@
 
   function isValidEmail(email) {
     const allowedDomains = ["gmail.com", "yahoo.com", "proton.me", "protonmail.com"];
-    const emailParts = email.split("@");
-    if (emailParts.length !== 2) return false;
-    const domain = emailParts[1].toLowerCase();
-    return allowedDomains.includes(domain) || domain.endsWith(".edu");
+    const parts = email.split("@");
+    return parts.length === 2 && (allowedDomains.includes(parts[1].toLowerCase()) || parts[1].toLowerCase().endsWith(".edu"));
   }
-  
+
+  function isValidCardNumber(num_card) {
+    return /^\d{13,19}$/.test(num_card.replace(/\s+/g, ""));
+  }
+
+  function isValidCVV(cvv) {
+    return /^\d{3,4}$/.test(cvv);
+  }
+  function isValidExpirationDate(expirationDate) {
+    const [month, year] = expirationDate.split("/").map(x => parseInt(x, 10));
+    if (!month || !year || month < 1 || month > 12) return false;
+
+    const now = new Date();
+    const inputDate = new Date(`20${year}`, month - 1); // assuming "MM/YY"
+
+    return inputDate >= new Date(now.getFullYear(), now.getMonth());
+  }
+
+  // Universal validations (apply to all methods)
   if (!isValidEmail(email)) {
     document.getElementById("error").hidden = false;
     return;
   } else {
     document.getElementById("error").hidden = true;
   }
-  
+
   if (!isValidPhone(phone)) {
     document.getElementById("error_tel").hidden = false;
     return;
   } else {
     document.getElementById("error_tel").hidden = true;
   }
-  function isValidCardNumber(num_card) {
-    const sanitized = num_card.replace(/\s+/g, '');
-    return /^\d{13,19}$/.test(sanitized);
-  }
-  function isValidCVV(cvv) {
-    return /^\d{3,4}$/.test(cvv);
-  }
-  if (!isValidCVV(cvv)) {
-    document.getElementById("error_cvv").hidden = false;
+
+  // Payment-specific validations
+  if (cardSelected) {
+    if (!isValidCardNumber(num_card)) {
+      document.getElementById("error_card").hidden = false;
+      return;
+    } else {
+      document.getElementById("error_card").hidden = true;
+    }
+
+    if (!isValidCVV(cvv)) {
+      document.getElementById("error_cvv").hidden = false;
+      return;
+    } else {
+      document.getElementById("error_cvv").hidden = true;
+    }
+    if (!isValidExpirationDate(expirationDate)) {
+    document.getElementById("error_expiration").hidden = false;
     return;
   } else {
-    document.getElementById("error_cvv").hidden = true;
+    document.getElementById("error_expiration").hidden = true;
   }
-  if (!isValidCardNumber(num_card)) {
-    document.getElementById("error_card").hidden = false;
-    return;
-  } else {
-    document.getElementById("error_card").hidden = true;
+
   }
-  
+  // Now generate the receipt content
   const date = new Date().toJSON();
   const tn = `FCA_SHOP_${(Math.random() * 233494 + 334).toFixed(0)}`;
-
-  // Use payment info only if that method is selected and fields are filled
-  let informations_paiement = "";
-
-  if (paymentMethod === "Carte Bancaire" && cvv !== "" && num_card !== "" && expirationDate !== "") {
-    informations_paiement = `Numéro de carte: ${num_card}\nDate d'expiration: ${expirationDate}\nCVV: ${cvv}`;
-  } else if (paymentMethod === "PayPal" && paypalEmail !== "N/A") {
-    informations_paiement = `Email PayPal: ${paypalEmail}`;
-  } else {
-    informations_paiement = "Informations de paiement non fournies";
+  let paymentDetails = "Informations de paiement non fournies";
+  if (paymentMethod === "Carte Bancaire") {
+    paymentDetails = `Numéro de carte: ${num_card}\nDate d'expiration: ${expirationDate}\nCVV: ${cvv}`;
+  } else if (paymentMethod === "PayPal") {
+    paymentDetails = `Email PayPal: ${paypalEmail}`;
   }
-  const INFOS = (paymentMethod==="Carte Bancaire" && (cvv!=""&&num_card!=""&&expirationDate!="")) ? `Numéro de carte:: ${num_card}\nDate d'expiration: ${expirationDate}\ncvv: ${cvv}` : `Email Paypal: ${paypalEmail}`
+  PP = parseFloat(price);
+  let taxRate = productsWithTVA[product_name] || 0;
+  let taxAmount = (PP * taxRate).toFixed(2);
+  let totalTTC = (PP + parseFloat(taxAmount)).toFixed(2);
+  let tvaDetails = taxRate > 0
+    ? `✔ TVA applicable (${(taxRate * 100).toFixed(0)}%): ${taxAmount} DH\nMontant TTC: ${totalTTC} DH`
+    : "✖ Aucune taux de TVA applicable pour ce produit.";
+        const INFOS = (paymentMethod==="Carte Bancaire" && (cvv!=""&&num_card!=""&&expirationDate!="")) ? `Numéro de carte:: ${num_card}\nDate d'expiration: ${expirationDate}\ncvv: ${cvv}` : `Email Paypal: ${paypalEmail}`;
   formDataText = `
-        Ticket FCA SHOP
-        Transaction N°: ${tn}
-        Date: ${date}
-        Produit Choisi: ${product_name}
-        Nom: ${nom}
-        Adresse: ${adresse}
-        Email: ${email}
-        Téléphone: ${phone}
-        Mode de Paiement: ${paymentMethod}
-        ${INFOS}
+    Ticket FCA SHOP
+    Transaction N°: ${tn}
+    Date: ${date}
+    Produit Choisi: ${product_name}
+    Prix HT: ${PP.toFixed(2)} DH
+    ${tvaDetails}
+    Nom: ${nom}
+    Adresse: ${adresse}
+    Email: ${email}
+    Téléphone: ${phone}
+    Mode de Paiement: ${paymentMethod}
+    ${INFOS}
     `.trim();
-  downloadPDF.style.display = "block"; // Show download PDF button
+
+
+  downloadPDF.style.display = "block"; // ✅ Show download button for both methods
 });
+
 downloadPDF.addEventListener("click", function() {
     async function generateStyledPDF(formDataText) {
     const { jsPDF } = window.jspdf;

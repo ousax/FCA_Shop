@@ -24,8 +24,7 @@
         </ul>
       </nav>
       <div class="actions" >
-        <button id="themeToggle" hidden>🌙</button>
-        <button id="cart-toggle" hidden>🛒 (<span id="cart-count">0</span>)</button>
+        <button id="themeToggle">🌙</button>
       </div>
     </div>
   </header>
@@ -39,8 +38,8 @@
         <div class="account-section">
           <h3>Informations Personnelles</h3>
           <div class="account-info">
-            <p><strong>Nom:</strong> John Doe</p>
-            <p><strong>Email:</strong> john.doe@example.com</p>
+            <p><strong>Nom:</strong> FCA Equipe</p>
+            <p><strong>Email:</strong> contact@fcashop.com</p>
             <p><strong>Téléphone:</strong> +212 6 12 34 56 78</p>
             <p><strong>Adresse:</strong> 123 Rue Principale, Casablanca</p>
           </div>
@@ -48,15 +47,15 @@
         <div class="account-section">
           <h3>Historique des Commandes</h3>
           <div class="account-info">
-            <p><strong>Dernière commande:</strong> #12345 - 12/06/2023</p>
+            <p><strong>Dernière commande:</strong> <p id="infos3lacommande"></p></p>
             <p><strong>Statut:</strong> Livrée</p>
-            <p><strong>Total:</strong> 450 DH</p>
+            <p><strong>Total:</strong> <p id="infosLivraison"></p></p>
           </div>
         </div>
         <div class="account-section">
           <h3>Paramètres</h3>
           <div class="account-info">
-            <p><a href="#">Modifier le mot de passe</a></p>
+            <p><a href="motdepassoublie.html">Modifier le mot de passe</a></p>
             <p><a href="#">Gérer les adresses</a></p>
             <p><a href="#">Préférences de notification</a></p>
           </div>
@@ -72,7 +71,22 @@
       </div>
     </div>
   </main>
-
+  <script>
+    const lyomHTML = document.getElementById("infos3lacommande");
+    const infosLivraison = document.getElementById("infosLivraison");
+    const PRXIDIALHA = Math.floor(Math.random() * (190 - 90 + 1)) + 90;
+    const lyomJSOn = new Date().toJSON();
+    lyomHTML.innerHTML = `${lyomJSOn}`;  
+    infosLivraison.innerHTML = `${PRXIDIALHA} DH`
+    document.getElementById("themeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
+  });
+  </script>
   <script src="script.js"></script>
+    <footer>
+    <p>&copy; 2025 FCA shop. Tous droits réservés.</p>
+  </footer>
 </body>
 </html>
