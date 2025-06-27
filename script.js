@@ -1,4 +1,4 @@
-// script.js
+
 const rawProducts = [
   ["Amandes Maroc", "images/amandes.jpg", "DH", "Amandes biologiques cultivées dans les régions fertiles du Maroc. Croquantes et pleines de nutriments."],
   ["Miel ZCH", "images/miel.jpg", "DH", "Miel 100% naturel produit dans les montagnes de l'Atlas. Riche en antioxydants et enzymes bénéfiques."],
@@ -18,6 +18,65 @@ const rawProducts = [
   ["Collier fait main", "images/necklace.jpg", "DH", "Ce collier fait main présente un design traditionnel et est fabriqué avec soin à partir de matériaux naturels. C’est une pièce magnifique et unique, réalisée avec amour."],
   ["Chaussures Antigravité", "images/Kangoo.avif", "DH", "Des chaussures révolutionnaires qui réduisent l'impact sur les articulations. Parfaites pour le fitness et la rééducation."]
 ];
+const translations = {
+  fr: {
+    "nav.shop": "Boutique",
+    "nav.account": "Mon Compte",
+    "nav.about": "À propos",
+    "nav.contact": "Contact",
+    "search.placeholder": "Rechercher...",
+    "sort.nameAsc": "Trier par: Nom (A-Z)",
+    "sort.nameDesc": "Trier par: Nom (Z-A)",
+    "sort.priceAsc": "Trier par: Prix (Croissant)",
+    "sort.priceDesc": "Trier par: Prix (Décroissant)",
+    "sort.ratingAsc": "Trier par: Note (Croissante)",
+    "sort.ratingDesc": "Trier par: Note (Décroissante)",
+    "footer.copyright": "© 2025 FCA Shop. Tous droits réservés."
+  },
+  en: {
+    "nav.shop": "Shop",
+    "nav.account": "My Account",
+    "nav.about": "About",
+    "nav.contact": "Contact",
+    "search.placeholder": "Search...",
+    "sort.nameAsc": "Sort by: Name (A-Z)",
+    "sort.nameDesc": "Sort by: Name (Z-A)",
+    "sort.priceAsc": "Sort by: Price (Low to High)",
+    "sort.priceDesc": "Sort by: Price (High to Low)",
+    "sort.ratingAsc": "Sort by: Rating (Low to High)",
+    "sort.ratingDesc": "Sort by: Rating (High to Low)",
+    "footer.copyright": "© 2025 FCA Shop. All rights reserved.",
+  },
+  ar: {
+    "nav.shop": "المتجر",
+    "nav.account": "حسابي",
+    "nav.about": "من نحن",
+    "nav.contact": "اتصال",
+    "search.placeholder": "ابحث...",
+    "sort.nameAsc": "ترتيب حسب: الاسم (أ-ي)",
+    "sort.nameDesc": "ترتيب حسب: الاسم (ي-أ)",
+    "sort.priceAsc": "ترتيب حسب: السعر (تصاعدي)",
+    "sort.priceDesc": "ترتيب حسب: السعر (تنازلي)",
+    "sort.ratingAsc": "ترتيب حسب: التقييم (تصاعدي)",
+    "sort.ratingDesc": "ترتيب حسب: التقييم (تنازلي)",
+    "footer.copyright": "© 2025 متجر FCA. جميع الحقوق محفوظة.",
+  }
+};
+document.getElementById("languageSelect").addEventListener("change", function () {
+  const lang = this.value;
+  const trans = translations[lang];
+
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (trans[key]) el.innerHTML = trans[key];
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (trans[key]) el.placeholder = trans[key];
+  });
+});
+
 const imgElement = document.getElementById("marqueeImage");
 let index = 0;
 
@@ -34,6 +93,7 @@ setInterval(() => {
     imgElement.classList.remove("fade-out");
   }, 1000); // Delay matches CSS transition duration
 }, 3000);
+
 function getRandomPrice(min = 20, max = 100) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -122,58 +182,6 @@ function changeLanguage() {
     }
   }
 languageSelect.addEventListener("change", changeLanguage);
-/*old function that handles the cart 
-function updateCartDisplay() {
-  cartItemsContainer.innerHTML = "";
-  let total = 0;
-  
-  cart.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = `${item.name} - ${item.price} DH`;
-    cartItemsContainer.appendChild(li);
-    total += item.price;
-  });
-  cartCount.textContent = cart.length;
-  cartTotal.textContent = `${total} DH`;
-}
-*/
-/*
-new function that handles the cart
-*/
-/*new code after adding the delete items 
-function updateCartDisplay() {
-  cartItemsContainer.innerHTML = "";
-  let total = 0;
-  
-  cart.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = `${item.name} - ${item.price} DH`;
-    cartItemsContainer.appendChild(li);
-    total += item.price;
-  });
-  
-  cartCount.textContent = cart.length;
-  cartTotal.textContent = `${total} DH`;
-  
-  // Enable/disable order button based on cart content
-  const orderButton = document.getElementById("ButtoncartTotal");
-  orderButton.disabled = cart.length === 0;
-  
-  // Add click handler if not already added
-  if (!orderButton.hasAttribute('data-listener-added')) {
-    orderButton.addEventListener('click', proceedToCheckout);
-    orderButton.setAttribute('data-listener-added', 'true');
-  }
-}
-
-function proceedToCheckout() {
-  if (cart.length > 0) {
-    // Your checkout logic here
-    alert('Redirection vers la page de commande...');
-    //window.location.href = `buy1.html?n=${}&p=${total}`; fix this adapt it to the buy1 it might contain more than one product 
-  }
-}
-*/
 // the start of the new code
 function updateCartDisplay() {
   cartItemsContainer.innerHTML = "";
@@ -234,7 +242,8 @@ function proceedToCheckout() {
     
   }
   // Redirection vers la page de commande
-  window.location.href = `buyPanier.html?${params.toString()}`;
+  //window.location.href = `buyPanier.html?${params.toString()}`;
+  window.location.href = `dwzCmdP.html?${params.toString()}`;
 }
 function removeFromCart(index) {
   // Remove item from cart array

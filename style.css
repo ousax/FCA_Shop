@@ -51,7 +51,7 @@ span:hover{
   color: green;
   box-shadow:  0 5px rgba(0,0,0,0.1);
 }
-#marqueeProduct {
+#marqueeProduct { 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,13 +66,9 @@ span:hover{
 #marqueeProduct img:hover {
   transform: scale(1.05);
 }
-
-
-
 .fade-out {
   opacity: 0;
 }
-
 #marqueeProduct img:hover{
     background: white;
     padding: 1rem;

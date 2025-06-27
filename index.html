@@ -15,53 +15,56 @@
 <body>
   <header>
     <div class="logo-nav">
-      <a href="index.html"><img src="images/fca-icon.png" alt="FCA Shop" class="logo"/>
-      <nav>
-      <ul class="main-nav">
-        <!-- Liens principaux avec icônes -->
-        <li><a href="index.html" class="active" target="_blank"><i class="fas fa-store"></i> <span>Boutique</span></a></li>
-        <li><a href="account.html"><i class="fas fa-user"></i> <span>Mon Compte</span></a></li>
-        <li><a href="about.html"><i class="fas fa-info-circle"></i> <span>À propos</span></a></li>
-        <li><a href="contact.html"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
-        
-        <!-- Conteneur pour search et sort -->
-        <li class="nav-utils">
-          <div class="search-bar">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Rechercher...">
-          </div>
-          <div class="sort-options">
-            <i class="fas fa-sort"></i>
-            <select id="sortSelect">
-              <option value="name-asc">Trier par: Nom (A-Z)</option>
-              <option value="name-desc">Trier par: Nom (Z-A)</option>
-              <option value="price-asc">Trier par: Prix (Croissant)</option>
-              <option value="price-desc">Trier par: Prix (Décroissant)</option>
-              <option value="rating-asc">Trier par: Note (Croissante)</option>
-              <option value="rating-desc">Trier par: Note (Décroissante)</option>>
-            </select>
-          </div>
-        </li>
-      </ul>
-    </nav>
-      <div class="actions">
-        <button id="themeToggle">🌙</button>
-        <div class="languages">
-            <i class="fas fa-language"></i>
-            <select id="languageSelect">
-              <option value="français">Français</option>
-              <option value="anglais">Anglais</option>
-              <option value="arabe">العربية</option>
-            </select>
+  <a href="index.html">
+    <img src="images/fca-icon.png" alt="FCA Shop" class="logo"/>
+  </a>
+  <nav>
+    <ul class="main-nav">
+      <li><a href="index.html" class="active" target="_blank"><i class="fas fa-store"></i> <span data-i18n="nav.shop">Boutique</span></a></li>
+      <li><a href="account.html"><i class="fas fa-user"></i> <span data-i18n="nav.account">Mon Compte</span></a></li>
+      <li><a href="about.html"><i class="fas fa-info-circle"></i> <span data-i18n="nav.about">À propos</span></a></li>
+      <li><a href="contact.html"><i class="fas fa-envelope"></i> <span data-i18n="nav.contact">Contact</span></a></li>
+
+      <li class="nav-utils">
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" data-i18n-placeholder="search.placeholder" placeholder="Rechercher...">
         </div>
-        <button id="cart-toggle">🛒 (<span id="cart-count">0</span>)</button>
-      </div>
+        <div class="sort-options">
+          <i class="fas fa-sort"></i>
+          <select id="sortSelect">
+            <option value="name-asc" data-i18n="sort.nameAsc">Trier par: Nom (A-Z)</option>
+            <option value="name-desc" data-i18n="sort.nameDesc">Trier par: Nom (Z-A)</option>
+            <option value="price-asc" data-i18n="sort.priceAsc">Trier par: Prix (Croissant)</option>
+            <option value="price-desc" data-i18n="sort.priceDesc">Trier par: Prix (Décroissant)</option>
+            <option value="rating-asc" data-i18n="sort.ratingAsc">Trier par: Note (Croissante)</option>
+            <option value="rating-desc" data-i18n="sort.ratingDesc">Trier par: Note (Décroissante)</option>
+          </select>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <div class="actions">
+    <button id="themeToggle">🌙</button>
+    <div class="languages">
+      <i class="fas fa-language"></i>
+      <select id="languageSelect">
+        <option value="fr">Français</option>
+        <option value="en">Anglais</option>
+        <option value="ar">العربية</option>
+      </select>
     </div>
+    <button id="cart-toggle">🛒 (<span id="cart-count">0</span>)</button>
+  </div>
+</div>
+
   </header>
 
   <main>
    <section id="marqueeProduct">
   <img src="images/amandes.jpg" id="marqueeImage" />
+    </section>
+  
   </section>
     <section id="productsGrid" class="grid-container"></section>
   </main>
@@ -85,7 +88,8 @@
 
   <script src="script.js"></script>
   <footer>
-    <p>&copy; 2025 FCA shop. Tous droits réservés.</p>
-  </footer>
+  <p data-i18n="footer.copyright">© 2025 FCA Shop. Tous droits réservés.</p>
+</footer>
+
 </body>
 </html>

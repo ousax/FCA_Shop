@@ -11,6 +11,7 @@
   <meta property="og:description" content="Achetez des produits incroyables à des prix équitables.">
   <meta property="og:url" content="https://ousax.github.io">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="buy11.css" rel="stylesheet">
 </head>
@@ -27,7 +28,7 @@
         <li><a href="contact.html"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
         
       </ul>
-    </nav>
+     </nav>
     <div class="actions">
       <button id="themeToggle">🌙</button>
     </div>
@@ -133,7 +134,7 @@
     ]; // verifier wach les prix et les noms des produits sont identiques et non pas manipuler par l'utilisateur (price manipulation issue)
     // on ne peut pas connaitre le prix d'un produit car nous avons utilisé des fonctions qui générent d'une manière aléatoire les prix des prodits
     // ce qui'il est conseillé de faire pour résoudre ce problème c'est de vérifier le nom du produit est de le comparer de celui dans la variable rawProducts
-    const productsWithTVA = {
+    const productsWithTVA = { // les taux de tva
     "Huile d'Argan": 0.20,
     "Huile d'Olive": 0.07,
     "Safran Premium": 0.07,
@@ -378,9 +379,9 @@
   let taxAmount = (PP * taxRate).toFixed(2);
   let totalTTC = (PP + parseFloat(taxAmount)).toFixed(2);
   let tvaDetails = taxRate > 0
-    ? `✔ TVA applicable (${(taxRate * 100).toFixed(0)}%): ${taxAmount} DH\nMontant TTC: ${totalTTC} DH`
-    : "✖ Aucune taux de TVA applicable pour ce produit.";
-        const INFOS = (paymentMethod==="Carte Bancaire" && (cvv!=""&&num_card!=""&&expirationDate!="")) ? `Numéro de carte:: ${num_card}\nDate d'expiration: ${expirationDate}\ncvv: ${cvv}` : `Email Paypal: ${paypalEmail}`;
+    ? "TVA applicable " + (taxRate * 100).toFixed(0)+"% "+ taxAmount+" DH\nMontant TTC: "+totalTTC+ "DH"
+    : "Aucun taux de TVA applicable pour ce produit.";
+  const INFOS = (paymentMethod==="Carte Bancaire" && (cvv!=""&&num_card!=""&&expirationDate!="")) ? `Numéro de carte:: ${num_card}\nDate d'expiration: ${expirationDate}\ncvv: ${cvv}` : `Email Paypal: ${paypalEmail}`;
   formDataText = `
     Ticket FCA SHOP
     Transaction N°: ${tn}
@@ -401,39 +402,103 @@
 });
 
 downloadPDF.addEventListener("click", function() {
-    async function generateStyledPDF(formDataText) {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    // Store title
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(20);
-    doc.setTextColor(0, 102, 204);
-    doc.text("FCA SHOP - Reçu de transaction", 10, 20);
-    const now = new Date().toLocaleString("fr-FR");
-    doc.setFontSize(10);
-    doc.setTextColor(100);
-    doc.text(`Date: ${now}`, 150, 20);
-    doc.setDrawColor(0);
-    doc.line(10, 25, 200, 25);
-    doc.setFontSize(14);
-    doc.setTextColor(33, 33, 33);
-    doc.text("Détails du client:", 10, 35);
-    const lines = formDataText.split('\n');
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-    let y = 45;
-    for (const line of lines) {
-      doc.text(line.trim(), 15, y);
-      y += 8;
+  async function generateStyledPDF(formDataText) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // --- HEADER ---
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.setTextColor(0, 102, 204);
+  doc.text("FCA SHOP - Reçu", 14, 20);
+
+  const now = new Date().toLocaleString("fr-FR");
+  doc.setFontSize(10);
+  doc.setTextColor(100);
+  doc.text(`Date: ${now}`, 150, 20);
+  doc.line(10, 25, 200, 25);
+
+  // Parse data
+  const lines = formDataText.split('\n');
+  const data = {};
+  lines.forEach(line => {
+    const parts = line.split(":");
+    if (parts.length > 1) {
+      const key = parts[0].trim();
+      const value = parts.slice(1).join(":").trim();
+      data[key] = value;
     }
-    doc.setDrawColor(220);
-    doc.rect(10, 30, 190, y - 30);
-    // Footer
-    doc.setFontSize(10);
-    doc.setTextColor(120);
-    doc.text("Merci pour votre commande !", 10, 280);
-    doc.save(`commande_confirmee_${now}.pdf`);
+  });
+
+  // --- PRODUCT TABLE ---
+  const productName = data["Produit Choisi"];
+  const prixHT = parseFloat(data["Prix HT"].replace("DH", "").trim());
+  const tvaLine = lines.find(l => l.includes("TVA applicable"));
+  const match = tvaLine ? tvaLine.match(/(\d+)%\s+([\d.]+)\s+DH/) : null;
+
+  const tvaPercent = match ? match[1] : "0";
+  const tvaAmount = match ? match[2] : "0.00";
+  const ttcLine = lines.find(l => l.includes("Montant TTC"));
+  const prixTTC = ttcLine ? ttcLine.match(/Montant TTC: ([\d.]+)/)[1] : prixHT;
+
+  doc.autoTable({
+    startY: 30,
+    head: [["Produit", "Prix HT", "TVA %", "TVA (DH)", "TTC"]],
+    body: [
+      [productName, `${prixHT.toFixed(2)} DH`, `${tvaPercent}%`, `${tvaAmount} DH`, `${prixTTC} DH`]
+    ],
+    theme: "grid",
+    styles: { fontSize: 11 },
+    headStyles: { fillColor: [0, 102, 204] }
+  });
+
+  // --- CUSTOMER INFO ---
+  let y = doc.lastAutoTable.finalY + 10;
+  doc.setFontSize(13);
+  doc.setTextColor(33);
+  doc.text("Informations Client:", 14, y);
+
+  y += 8;
+  const clientFields = ["Nom", "Adresse", "Email", "Téléphone"];
+  clientFields.forEach(field => {
+    if (data[field]) {
+      doc.setFontSize(11);
+      doc.text(`${field}: ${data[field]}`, 20, y);
+      y += 6;
+    }
+  });
+
+  // --- PAYMENT INFO ---
+  y += 5;
+  doc.setFontSize(13);
+  doc.setTextColor(33);
+  doc.text("Méthode de Paiement:", 14, y);
+
+  y += 8;
+  doc.setFontSize(11);
+  doc.setTextColor(50);
+
+  const isCard = data["Mode de Paiement"] === "Carte Bancaire";
+  if (isCard) {
+    const cardNumber = data["Numéro de carte::"]?.replace(/\s/g, "") ?? "";
+    const masked = "**** **** **** " + cardNumber.slice(-4);
+    doc.text(`Carte Bancaire`, 20, y); y += 6;
+    doc.text(`Numéro: ${masked}`, 20, y); y += 6;
+    doc.text(`Expiration: ${data["Date d'expiration"]}`, 20, y); y += 6;
+    doc.text(`CVV: ***`, 20, y); y += 6;
+  } else {
+    doc.text(`PayPal - ${data["Email Paypal"]}`, 20, y); y += 6;
   }
+
+  // --- FOOTER ---
+  doc.setFontSize(10);
+  doc.setTextColor(120);
+  doc.text("Merci pour votre commande !", 70, 285);
+
+  const transactionID = data["Transaction N°"];
+  doc.save(`reçu_FCA_${transactionID}.pdf`);
+}
+  
   generateStyledPDF(formDataText);
   //    window.location.href = "index.html" // redirect lhomepage apres l'inpression dial reçu
   // vider dok les cases 
