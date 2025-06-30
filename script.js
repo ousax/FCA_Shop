@@ -77,22 +77,6 @@ document.getElementById("languageSelect").addEventListener("change", function ()
   });
 });
 
-const imgElement = document.getElementById("marqueeImage");
-let index = 0;
-
-setInterval(() => {
-  // Fade out
-  imgElement.classList.add("fade-out");
-
-  // After fade-out transition ends, change image and fade back in
-  setTimeout(() => {
-    index = (index + 1) % rawProducts.length;
-    imgElement.src = rawProducts[index][1];
-
-    // Trigger fade-in
-    imgElement.classList.remove("fade-out");
-  }, 1000); // Delay matches CSS transition duration
-}, 3000);
 
 function getRandomPrice(min = 20, max = 100) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
